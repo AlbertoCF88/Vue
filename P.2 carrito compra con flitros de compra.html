@@ -19,30 +19,25 @@
         margin: 15px; 
         padding-bottom: 15px;
         }
-       
         img {
         border-radius: 5px 5px 0 0;
         width: 100%;
         }
         .row{
           justify-content: center;
-      
         }
-
         select{
           width: auto;
         }
-      
     </style>
 <body>
-
-  <div id="app" class="container"><!--los datos del objeto que quieras manipular deben de estar en este div app-->
-    <button type="button"  class="button  success" @click="ver = !ver">Ver filtro precios</button>
+  <div id="app" class="container"><!--los datos del data que quieras manipular deben de estar en este div app-->
+    <button type="button" class="button  success" @click="ver = !ver">Ver filtro precios</button>
       <transition name="animaInput"
         enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
         leave-active-class="animate__animated animate__fadeOutUp animate__faster">
             <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
-          <select v-model="preciomax" v-if="ver " ><!--va con el elemento click del boton y en el objeto tienes que ponerlo a true-->
+          <select v-model="preciomax" v-if="ver"><!--va con el elemento click del boton y en el objeto tienes que ponerlo a true-->
               <option disabled value="">Seleccione un precio máximo</option><!--disabled value="" en blanco para que no pueda ser selecionado-->
               <option>150</option>
               <option>250</option>
@@ -51,29 +46,25 @@
            </select>
       </transition>
   
-<!--transicion grupal-->   <transition-group class="row" name="animaCursos" 
+<!--transicion grupal--> <transition-group class="row" name="animaCursos" 
       enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
       leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
           <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
-          <div class="carta "  v-for="curso in cursos" v-if="curso.precio<=preciomax"  :key="curso.id"><!--var curso guardame cada objetos de cursos-->
-              <!--v-if muestra los curos segun precio en preciomax-->                 <!--:key="" es de la transicion grupal-->
-              <img :src="curso.imagen" :alt="curso.name"> <!--ojo con :src  sirve para sacar el valor que contiene el objeto-->
-                <div class="container">
-                  <h4><b>{{curso.name}}</b></h4>
+          <div class="carta" v-for="curso in cursos" v-if="curso.precio<=preciomax" :key="curso.id"><!--var curso guardame cada objetos de cursos-->
+              <!--v-if muestra los curos segun precio en preciomax-->    <!--:key="" es de la transicion grupal-->
+            <img :src="curso.imagen" :alt="curso.name"> <!--ojo con :src  sirve para sacar el valor que contiene el objeto-->
+              <div class="container">
+                <h4><b>{{curso.name}}</b></h4>
                   <p>{{curso.sexo}}</p>
-                  <span><b>Precio:</b> {{curso.precio}}€</span>
+                    <span><b>Precio:</b> {{curso.precio}}€</span>
               </div>
           </div>
-        <!-- </div>    -->
-    </transition-group>  
-    </div>
-
-        
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+      </transition-group>  
+  </div>
+     
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
  
-    <script>
- 
-
+<script>
 var data = {
   el: '#example-3',
   ver: false,
@@ -90,7 +81,7 @@ var data = {
       "id":2,
       "name": "Curso Front End",
       "imagen": "IMG/fullstack.jpg",
-      "sexo": "El curso más potente para aprender todo lo necesario sobre Frontend  ",
+      "sexo": "El curso más potente para aprender todo lo necesario sobre Frontend ",
       "precio": 220,
     } ,
     {
@@ -109,17 +100,10 @@ var data = {
     } 
   ]
 }
-
-
 var app = new Vue({
       el: '#app',
       data: data
     })
-
-
-    </script>
-
-
-
+</script>
 </body>
 </html>

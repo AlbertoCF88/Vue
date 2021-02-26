@@ -6,38 +6,26 @@
     <title>Document</title>
 </head>
 <body>
+  <div id="app">
+    <transition name="mode-fade" mode="out-in">
+      <button v-if="on" key="on" @click="on = false">
+        on
+      </button>
+        <button v-else key="off" @click="on = true">
+          off
+        </button>
+    </transition>
+  </div>
 
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
-
-
-
-    <div id="app">
-   
-        <transition name="mode-fade" mode="out-in">
-          <button v-if="on" key="on" @click="on = false">
-            on
-          </button>
-          <button v-else key="off" @click="on = true">
-            off
-          </button>
-        </transition>
-      </div>
-
-
-      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-      <script>
-
+<script>
 var app = new Vue({
-
 el: '#app',
-
   data:{
       on: false,
     }
-
 })
-
-
-      </script>
+</script>
 </body>
 </html>

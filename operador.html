@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <titl>operador</title>
+    <titl>Operador</title>
 </head>
 <body>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+  <div id="animated-number-demo">
+    <input v-model.number="number" type="number" step="20">
+    <p>{{ animatedNumber }}</p>
+  </div>
 
-
-    <div id="animated-number-demo">
-        <input v-model.number="number" type="number" step="20">
-        <p>{{ animatedNumber }}</p>
-      </div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
  
-    <script>
+<script>
     new Vue({
   el: '#animated-number-demo',
   data: {
@@ -35,6 +33,6 @@
     }
   }
 })
-    </script>
+</script>
 </body>
 </html>
