@@ -28,7 +28,7 @@ html{
     -webkit-text-stroke: 0.5px black;
   }
   h2{
-    margin-top: 9rem;
+    margin-top: 6rem;
   }
   .IMG{
     z-index: 0;
@@ -138,6 +138,11 @@ html{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;  
+  }
+  .desbordarNombre{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 5px;
   }
 /*animacon check*/
 [type="checkbox"]{display:none;}

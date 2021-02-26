@@ -6,7 +6,6 @@
     <title>P.4 vue matriculados</title>
     <link rel="stylesheet" href="https://unpkg.com/chota">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="CSS.css">
    <link rel="shortcut icon" href="IMG/vueIco.ico" >
 </head>
@@ -15,7 +14,7 @@
     <header >
           <div >
               <div class="fondoVerde"> 
-                <img class="IMG"src="IMG/vue.png" alt="Logo vue">  
+                <img role=img class="IMG"src="IMG/vue.png" alt="Logo vue">  
               </div>
               <div class="enmarcarP">
                 <h1 class="contH1">Prueba con <span class="spanContH1"> Vue</span ></h1>
@@ -26,134 +25,135 @@
  <!--Inicio formulario--> 
 <div id="app" class="cuerpo">
  <main role ="main">     
-      <div class="container">
-        <h2> Usuarios registrados:<span>{{usuarios.length}} </span>Matriculados:<span>{{contador.length}}</span></h2>  
-      </div> 
+    <div class="container">
+        <span class="usuarioSpan">Adaptación Responsiva</span>   
+          <h2>Usuarios registrados:<span>{{usuarios.length}} </span>Matriculados:<span>{{contador.length}}</span></h2>  
+    </div> 
       <div class="container">
         <form name="Alumnos" role=form>
           <span class="usuarioSpan ">Usuarios que vienen de una base datos Json</span>   
+           
             <div class="container row">
                 <!--boton borrar-->
               <button role=button class="button error botonBorrar" type="button" @click="borrar()">Restaurar formulario</button>
                 <!--v-on y @ es lo mismo-->
                   <!--seleccionar todo-->
-              <button role=button class="button primary" type="button" @click='seleccionarTodos()'v-model="checked">Seleccionar todos</button>
+                <button role=button class="button primary" type="button" @click='seleccionarTodos()'v-model="checked">Seleccionar todos</button>
             </div>
-             <ul class="desbordar">
-                <!--lista de usuarios-->
-                <li v-for="usuario in usuarios">
-              <input role=checkbox type="checkbox" :id="usuario.name" :value="usuario.name" v-model="contador"> <!-- :disabled="deshabilitar"  --> 
-                    <label :for="usuario.name">{{usuario.name}}</label> <!--{{usuario.name.toLowerCase()}} puedes meter javacript en la vista-->
-                        <!--los :delante de elemento coge la informacion del objeto, abreviatura v-bind-->
-                    <hr role=separator>
-                </li><!--las propiedades del objeto en la https://jsonplaceholder.typicode.com/users --> 
-            </ul>
+              <ul class="desbordar" role="listbox">
+                  <!--lista de usuarios-->
+                  <li role=listitem v-for="usuario in usuarios" class="desbordarNombre">
+                    <input role=checkbox type="checkbox" :id="usuario.name" :value="usuario.name" v-model="contador"> 
+                    <label :for="usuario.name" class="h4lista">{{usuario.name}}</label> <!--{{usuario.name.toLowerCase()}} puedesmeter    javacript en la vista-->
+                          <!--los :delante de elemento coge la informacion data, abreviatura v-bind-->
+                      <hr role=separator>
+                  </li><!--las propiedades del objeto en la https://jsonplaceholder.typicode.com/users --> 
+              </ul>
         </form>
       </div> 
-<!--Fin formulario-->  
-<!-- Input url-->
-        <div class="container">  
-            <div class="row">
-                     <h4>Introduce texto: </h4> 
-                     <div class="ojoflex"@click="ojo=!ojo">
-               <transition name="fade">
-                       <i v-if="ojo" class="fas fa-eye ojoTrue"></i> 
-                       <i v-else="ojo" class="fas fa-eye-slash ojoFalse"></i>
-                      </div>
-               </transition>
-                      
-              <transition name="fade">
-                    <div class="col" v-if="ojo">
-                        <span  class="spanOjo">Escribe lo que introduces en el input en minúsculas ,sin caracteres especiales y sin espacios (80 caracteres máximo):</span>
-                    </div>
-              </transition>
-            </div>     
-                    <div class="desbordar">
-                        <input id="texto" role=textbox :class="{'comFalse' :url.length <=5 ,'comTrue':url.length >=5 }" type="text " v-model="url"    @click="vaciar" onkeypress="if(this.value.length ==80){return false}" >
-                        <span class="container  "> {{urls}}</span><!--cuidado cone el orden de las clases comTrue y comFalse en el css-->
-                    </div>
-                        <button  type="button" class="button success" id="show-modal" @click="showModal = true">Enviar formulario</button><!--ventana modal-->
-        </div> 
-<!--Fin  Input url-->
-<!--ventana modal-->
-<div v-if="showModal" type="text/x-template" id="modal-template">
-    <transition name="modal">
-      <div class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-container">
-            <div class="modal-header ">
-              <slot name="header">
-                <a class="modalCerrar" @click="showModal=false" ><i class="fas fa-times-circle button dark"></i></a>
-              </slot>
-            </div>
-            <div class="modal-body container">
-              <slot name="body">
-              <strong>Usuarios registrados: <span>{{usuarios.length}}</span></strong> 
-               <hr 	role=separator>
-              </slot>
-            </div>
-            <div class="modal-footer container ">
-              <slot name="footer" >
+  <!--Fin formulario-->  
+  <!-- Input url-->
+  <div class="container">  
+      <div class="row">
+        <h4>Introduce texto: </h4> 
+        <transition name="fade">
+          <div class="ojoflex"@click="ojo=!ojo">
+              <i v-if="ojo" class="fas fa-eye ojoTrue"></i> 
+              <i v-else="ojo" class="fas fa-eye-slash ojoFalse"></i>
+          </div>
+        </transition>
+                
+        <transition name="fade">
+          <div class="col" v-if="ojo">
+            <span class="spanOjo">Escribe lo que introduces en el input en minúsculas ,sin caracteres especiales y sespacios (80 caracteres máximo):</span>
+          </div>
+        </transition>
+      </div>     
+        <div class="desbordar">
+          <input id="texto" role=textbox :class="{'comFalse' :url.length <=5 ,'comTrue':url.length >=5 }" type="text" v-model="url"    @click="vaciar" onkeypress="if(this.value.length ==80){return false}">
+            <span class="container">{{urls}}</span><!--cuidado cone el orden de las clases comTrue y comFalse en el css-->
+        </div>
+          <button role="button" type="button" class="button success" id="show-modal" @click="showModal=true">Enviar formulario</button><!--ventana modal-->
+  </div> 
+  <!--Fin  Input url-->
+  <!--ventana modal-->
+  <div v-if="showModal" type="text/x-template" id="modal-template">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              <div class="modal-header ">
+                <slot name="header">
+                  <a role=button class="modalCerrar" @click="showModal=false" ><i class="fas fa-times-circle button dark"></i></a>
+                </slot>
+              </div>
+              <div class="modal-body container">
+                <slot name="body">
+                <strong>Usuarios registrados: <span>{{usuarios.length}}</span></strong> 
+                 <hr role=separator>
+                </slot>
+              </div>
+              <div class="modal-footer container ">
+                <slot name="footer" >
+                  <div>
+                  <strong>Usuarios matriculados: <span>{{contador.length}}</span></strong>  
+                  <button role=button type="button" class="button error buttonLista" @click="lista=true">Lista</button>
+                  <hr role=separator> 
+                </div>
                 <div>
-                <strong>Usuarios matriculados: <span>{{contador.length}}</span></strong>  
-                <button  class="button error buttonLista" @click="lista=true">Lista</button>
-                <hr role=separator> 
+                  <strong>Texto introducido: <span class="textoLista">{{urls}}</span></strong> 
+                  <hr role=separator>
+                </div>
+               <div class="container  buttonModal">
+                  <a role=button type="button" class="button primary botonModal" href="P4. p3 mejorado  registros y matriculados.html">Aceptar</a>  
+                  <button role=button type="button" class="button secondary botonModal" @click="showModal=false"> Cancelar</button>
               </div>
-              <div>
-                <strong>Texto introducido: <span class="textoLista">{{urls}}</span></strong> 
-                <hr role=separator>
+                </slot>
               </div>
-             <div class="container  buttonModal">
-                <a class="button primary botonModal" href="P4. p3 mejorado  registros y matriculados.html">Aceptar</a>  
-                <button  class="button secondary botonModal" @click="showModal=false"> Cancelar</button>
-            </div>
-              </slot>
             </div>
           </div>
         </div>
-      </div>
-    </transition>
+      </transition>
   </div>
-       <!-- lista -->
-<div id="lista" v-if="lista">
-    <div class="enmarcar">
-        <div class="fondoVerdeFixed"> 
-          <img class="IMGFixed"src="IMG/vue.png" alt="Logo vue">  
-        </div>
-        <div class="enmarcarP">
-          <h1 class="contH1Fixed">Prueba con <span class="spanContH1"> Vue</span ></h1>
-        </div>
-    </div>
-      <div class="nombreLista desbordar" >
-            <ul >
-              <li v-for="cont in  contador">
-            
-                    <h4 class="h4lista">{{cont}}</h4></label>
-                    
-                      <hr class="hrLista"role=separator>
-              </li>
-          </ul>
+         <!-- lista -->
+  <div id="lista" v-if="lista">
+      <div class="enmarcar">
+          <div class="fondoVerdeFixed"> 
+            <img role=img class="IMGFixed"src="IMG/vue.png" alt="Logo vue">  
+          </div>
+          <div class="enmarcarP">
+            <h1 class="contH1Fixed">Prueba con <span class="spanContH1"> Vue</span ></h1>
+          </div>
       </div>
-      <div >
-        <div class="matriculadoFixed"> <div class="textoFixed"> Matriculados: <span class="rojoSuave">{{contador.length}}</span></div> </div>
-        <a class="modalCerrar modalCerrarLista" @click="lista=false" ><i class="far fa-arrow-alt-circle-left button dark icoAtras"></i></a>
-      </div>  
-</div>  
-<!-- fin lista -->
-<!--fin modal-->
-</div>  <!--div final app-->
+        <div class="nombreLista desbordar">
+          <ul role="listbox">
+            <li role=listitem v-for="cont in contador">
+              <h4 class="h4lista">{{cont}}</h4></label>
+              <hr class="hrLista"role=separator>
+            </li>
+          </ul>
+        </div>
+          <div class="matriculadoFixed"> <div class="textoFixed"> Matriculados: <span class="rojoSuave">{{contador.length}}</span></div> 
+            <a role=button class="modalCerrar modalCerrarLista" @click="lista=false"><i class="far fa-arrow-alt-circle-left button dark icoAtras"></i></a>
+          </div>  
+  </div>  
+  <!-- fin lista -->
+  <!--fin modal-->
+</div> <!--div final app-->
 <!--fin modal-->
 <!--footer-->
 <footer >
-    <div class="textoVerde container"> 
-        <h5 >Desarrollador FRONT END</h5>
-        <h4>Alberto Carrasco Fernández </h4>           
+  <div class="textoVerde container"> 
+    <h5 >Desarrollador FRONT END</h5>
+    <h4>Alberto Carrasco Fernández </h4>           
       <div class="fooflex">
-            <li><a href="https://github.com/AlbertoCF88" target="_blank" class="hvr-float-shadow"><i class="fab fa-github-square"></i></a></li>
-            <li><a href="mailto: albertocarrascofernandez@hotmail.com" target="_blank" class="hvr-float-shadow"><i class="fas fa-at"></i></a></li>
-            <li><a href="tel:#"  target="_blank" class="hvr-float-shadow"><i class="fas fa-phone-square-alt"></i></a> </li>
-          </div>  
-        </div>  
+        <li role=listitem> 
+          <a role=link href="https://github.com/AlbertoCF88" target="_blank" class="hvr-float-shadow"><i class="fab fa-github-square"></i></a>
+          <a role=link href="mailto: albertocarrascofernandez@hotmail.com" target="_blank" class="hvr-float-shadow"><i class="fas fa-at"></i></a>
+          <a role=link href="tel:#" target="_blank" class="hvr-float-shadow"><i class="fas fa-phone-square-alt"></i></a>
+        </li>
+      </div>  
+  </div>  
 </footer>
 <!--Fin footer-->
 <script src="https://cdn.jsdelivr.net/npm/vue"></script><!--script para compilar con vue-->
