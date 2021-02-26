@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue P1</title>
+</head>
+<body>
+
+    <div id ="app">
+        <h1>{{nombre}}</h1>
+        <p>{{descripcion}}</p>
+        <span>{{precio}} €</span>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+ 
+    <script>
+        
+        var lista = {
+            "nombre": "Curso de algo",
+            "descripcion": "texto de lo que va le curso",
+            "precio": 100
+        }
+
+        var app = new Vue({ //este bloque siempre al final
+           el: '#app',//id html
+           data: lista 
+        })
+
+    </script>
+
+
+
+</body>
+</html>

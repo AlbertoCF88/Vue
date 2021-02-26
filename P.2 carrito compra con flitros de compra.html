@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue P2</title>
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+    <style>
+      body{
+        margin-top: 5px;
+      }
+        .carta {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        border-radius: 5px; /* 5px rounded corners */
+        width: 350px;
+        margin: 15px; 
+        padding-bottom: 15px;
+        }
+       
+        img {
+        border-radius: 5px 5px 0 0;
+        width: 100%;
+        }
+        .row{
+          justify-content: center;
+      
+        }
+
+        select{
+          width: auto;
+        }
+      
+    </style>
+<body>
+
+  <div id="app" class="container"><!--los datos del objeto que quieras manipular deben de estar en este div app-->
+    <button type="button"  class="button  success" @click="ver = !ver">Ver filtro precios</button>
+      <transition name="animaInput"
+        enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
+        leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+            <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
+          <select v-model="preciomax" v-if="ver " ><!--va con el elemento click del boton y en el objeto tienes que ponerlo a true-->
+              <option disabled value="">Seleccione un precio máximo</option><!--disabled value="" en blanco para que no pueda ser selecionado-->
+              <option>150</option>
+              <option>250</option>
+              <option>350</option>
+              <option value="999">Todo</option>
+           </select>
+      </transition>
+  
+<!--transicion grupal-->   <transition-group class="row" name="animaCursos" 
+      enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
+      leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
+          <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
+          <div class="carta "  v-for="curso in cursos" v-if="curso.precio<=preciomax"  :key="curso.id"><!--var curso guardame cada objetos de cursos-->
+              <!--v-if muestra los curos segun precio en preciomax-->                 <!--:key="" es de la transicion grupal-->
+              <img :src="curso.imagen" :alt="curso.name"> <!--ojo con :src  sirve para sacar el valor que contiene el objeto-->
+                <div class="container">
+                  <h4><b>{{curso.name}}</b></h4>
+                  <p>{{curso.sexo}}</p>
+                  <span><b>Precio:</b> {{curso.precio}}€</span>
+              </div>
+          </div>
+        <!-- </div>    -->
+    </transition-group>  
+    </div>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+ 
+    <script>
+ 
+
+var data = {
+  el: '#example-3',
+  ver: false,
+    preciomax :999 ,//muestra todos los cursos
+  cursos: [
+    {
+      "id":1,
+      "name": "Curso Wordpress",
+      "imagen": "IMG/wordpress.jpg",
+      "sexo": "El curso más potente para aprender todo lo necesario sobre Wordpress",
+      "precio": 110,
+    },
+    {
+      "id":2,
+      "name": "Curso Front End",
+      "imagen": "IMG/fullstack.jpg",
+      "sexo": "El curso más potente para aprender todo lo necesario sobre Frontend  ",
+      "precio": 220,
+    } ,
+    {
+      "id":3,
+      "name": "Curso Fullstack",
+      "imagen": "IMG/frontend.jpg",
+      "sexo": "El curso más potente para aprender todo lo necesario sobre Frontend y Backend ",
+      "precio": 420,
+    } ,
+    { 
+      "id":4,
+      "name": "Curso SEO",
+      "imagen": "IMG/seo.png",
+      "sexo": "El curso más potente para aprender todo lo necesario sobre SEO y posicionamiento Web",
+      "precio": 300,
+    } 
+  ]
+}
+
+
+var app = new Vue({
+      el: '#app',
+      data: data
+    })
+
+
+    </script>
+
+
+
+</body>
+</html>
