@@ -7,11 +7,12 @@
 </head>
 <body>
   <div id="app">
+    <button  @click="on = !on">iiii</button>
     <transition name="mode-fade" mode="out-in">
-      <button v-if="on" key="on" @click="on = false">
+      <button v-if="on" >
         on
       </button>
-        <button v-else key="off" @click="on = true">
+        <button   >
           off
         </button>
     </transition>
