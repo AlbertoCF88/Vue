@@ -3,18 +3,18 @@
     padding-bottom: 0; 
 }
 .encuadreEnlaces{
-    margin-top: 5rem!important;
+    margin-top: 3.9rem!important;
     margin-bottom: 2rem;
 }
 .tituloCurso{
-    background: #fed55c;
+    background: #0b6efd;
     margin-top: 1rem;
     height: 2rem;
     text-align: center;
     font-size: 19px;
     font-family: monospace;
-    box-shadow: 1px 4px 7px rgb(134 123 123 / 47%), 0px -13px 8px 0px rgb(134 123 123 / 47%) inset;
-    border-radius: 15px 15px; 
+    box-shadow: 0px 8px 12px 1px rgb(134 123 123 / 58%), 0px -10px 8px 0px #2196f3 inset;
+    border-radius: 0px 0px 45px 45px;
     color: white;
     font-weight: bold;
 }
@@ -123,7 +123,7 @@ hr {
 .fotoMaterial{
     padding: 22px;
     width: 100%;
-    margin: 13px auto;
+    margin: 7px auto;
     align-items: center;
     justify-content: center;
     display: flex;;
@@ -141,3 +141,24 @@ hr {
     padding-right:0 !important;
     padding-left: 0 !important;
 }
+.PrecioMaterial{
+    padding-left: 15px;
+}
+.botonAñadirMaterial{
+    width: 96%;
+    margin-left: 10px;
+    border-radius: 0px 0px 14px 14px;
+}
+.h6cestaMaterial {
+    background: #c97d1e;
+    color: white;
+    position: relative;
+    bottom: 9px;
+    padding: 5px 17px;
+}
+
+
+
+
+
+

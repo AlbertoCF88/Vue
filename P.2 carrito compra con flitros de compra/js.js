@@ -1,14 +1,16 @@
 var data = {
 el: '#example-3',
-    ver: false,
-    preciomax :999 ,//muestra todos los cursos
-    cesta:[],
-    añadeProducto:true,/*oculta texto cesta */
-    VerCurso:true,
-    VerMaterial:false,
+  ver: false,
+  preciomax :999 ,//muestra todos los cursos
+  cesta:[],
+  cestaMaterial:[],
+  añadeProducto:true,/*oculta texto cesta */
+  añadeProducto2:false,/*oculta texto cesta */
+  VerCurso:true,
+  VerMaterial:false,
+  hover:true,
 
-
-    total:"",
+  total:"",
 cursos: [
     {
       "id":1,
@@ -62,7 +64,7 @@ materialEscolar:[
         "name": "subcarpeta",
         "imagen": "IMG/subcarpeta.jpg",
         "desc": "Subcarpeta Exacompta din A4",
-        "precio": 3,
+        "precio": 13.10,
         "stock":"",
         "color":null,
       },
@@ -107,7 +109,12 @@ el: '#app',
             this.VerMaterial=true;
             return  this.VerCurso, this.VerMaterial
         },
-        agregarCesta:function(curso){
+        enlaceMaterial1:function(){
+          this.VerMaterial=false;
+          this.VerMaterial1=true;
+          return  this.VerCurso, this.VerMaterial
+      },
+        agregarCesta:function(curso){//curso o material
             /*al crear una array dentro del array debe ser cambiado en la vista*/
             var prodExistente;
             var exitente;
@@ -126,7 +133,26 @@ el: '#app',
             }
             /*filtro pra no repetir cursos*/
         },
-        random:function(curso){
+        agregarCestaMaterial:function(material){//curso o material
+          /*al crear una array dentro del array debe ser cambiado en la vista*/
+          var prodExistente;
+          var exitente;
+          exitente = this.cestaMaterial.filter(function (item,index) { 
+            if(item.material.id == Number(material.id)){
+              prodExistente = index;
+              return true;
+            }else {
+              return  false;
+            }
+          });    
+          if(exitente.length){
+            this.cestaMaterial[prodExistente]
+          }else{
+            this.cestaMaterial.push({material:material})
+          }
+          /*filtro pra no repetir cursos*/
+      },
+        random:function(material){//curso o material
             /*de forma random me pone si esta o no es stock y su color (cambia el stock según clicas el boton aunque  no agregues elementos en la cesta)*/
             var  colorStock
             var dado=  Math.floor(Math.random()* 2)+1; 
@@ -134,8 +160,8 @@ el: '#app',
             if(dado==2){
               colorStock=true
               dado ="En stock";
-              curso.stock=dado;
-              curso.color= colorStock;
+              material.stock=dado;
+              material.color= colorStock;
              /*    materialmaterial.stock=dado;
                 material.color= colorStock; */
               console.log(`color ${colorStock}`)
@@ -143,8 +169,8 @@ el: '#app',
             }else{
               colorStock=false
               dado = "Sin stock"
-              curso.stock=dado;
-              curso.color= colorStock;
+              material.stock=dado;
+              material.color= colorStock;
                 // materialmaterial.stock=dado;
                 // material.color= colorStock;
               console.log(`color ${colorStock}`)

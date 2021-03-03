@@ -16,17 +16,17 @@
   <div id="app" class=""><!--los datos del data que quieras manipular deben de estar en este div app-->
     <nav class="navbar fixed-top bg-primary">
       <div class="d-flex bd-highlight">
-         <!--Cursos-->    
+  <!--Cursos-------------------------->    
          <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceCurso()">Cursos</button> 
-         <!--Material--> 
+  <!--Material---------------------------> 
           <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceMaterial()">Material escolar</button> 
-        <!--Cesta-->
+  <!--Cesta------------------------------>
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-cart2"></i><span class="cantidadCesta">{{cesta.length | dosDigitos('0')}}</span>
+              <i class="bi bi-cart2"></i><span class="cantidadCesta">{{cesta.length + cestaMaterial.length| dosDigitos('0')}}</span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <h6 class="h6cesta">Cesta</h6>
+              <h6 class="h6cesta">Cesta cursos</h6>
               <span v-if="añadeProducto" class="text-center d-block cestaNombrePrecio">Añade productos al carrito</span>
               <div v-for="(cursoCesta, index) in cesta" :key="index">
                   <a class="dropdown-item" href="#">
@@ -36,9 +36,21 @@
                   </a>
                   <hr>
               </div>
+    <!--Cesta materiales----------------------------------------------->
+              <div v-if="añadeProducto2">
+                <li><hr class="dropdown-divider"></li>
+                  <h6 class="h6cestaMaterial">Cesta materiales</h6>
+                    <div v-for="(materialCesta, indexo) in cestaMaterial" :key="indexo">
+                      <a class="dropdown-item" href="#">
+                        <img class="cestaImagen" :src="materialCesta.material.imagen" alt="materialCesta.material.name">
+                          <div class="cestaNombrePrecio"><p>{{materialCesta.material.name}}: </p> <span class="cestaPrecio">  {{materialCesta.material.precio | moneda }}</span></div>
+                            <span :class="{'conStock':materialCesta.material.color,'SinStock': !materialCesta.material.color}" class="d-flex stock" >{{materialCesta.material.stock}}</span>
+                      </a>
+                      <hr>
+                    </div>
+                </div><!--if-->
             </ul>
           </div>
- 
       </div>
     </nav>
 <!--Cursos------------------------------------------------------------------------>
@@ -74,7 +86,7 @@ enter-active-class="animate__animated animate__fadeIn animate__faster">
                 <h5 class="card-title">{{curso.name}}</h5>
                   <p class="card-text">{{curso.desc}}</p>
                     <span><b>Precio:</b> {{curso.precio | moneda }}</span>
-                      <button @click="agregarCesta(curso);añadeProducto=false; random(curso)" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">Añadir</button>
+                      <button @click="agregarCesta(curso);añadeProducto=false" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">Añadir</button>
             </div>
           </div>
         </div>
@@ -84,29 +96,33 @@ enter-active-class="animate__animated animate__fadeIn animate__faster">
  <!--Material escolar------------------------------------------------------------------------------------------->
  <transition name="animaEncuadre "class="row"
  enter-active-class="animate__animated animate__fadeIn animate__faster">
-  <div v-if="VerMaterial"class="container encuadreEnlaces">
+ <div v-if="VerMaterial" id="Material">
+  <div class="container encuadreEnlaces">
+    <div class="tituloCurso container">Material escolar</div>
     <div class="row">
-    <div class="col d-flex justify-content-center" v-for="material in materialEscolar">
-      <div class="card cartaMaterial mt-3">
-        <div class="row rowSinpadding">
-          <div class="col rowSinpadding">
-            <img class="fotoMaterial":src="material.imagen" :alt="material.name">
-          </div>
-          <div class="col rowSinpadding">
-            <div class="card-body text-white bg-dark cartaMaterialBody">
-              <h5 class="card-title">{{material.name}}</h5>
-              <p class="card-text">{{material.desc}}</p>
-              <!-- <button @click="agregarCesta(material);añadeProducto=false; random(material)" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">Añadir</button> -->
+      <div class="col d-flex justify-content-center mt-5" v-for="material in materialEscolar">
+          <div class="card cartaMaterial mt-3">
+            <div class="row rowSinpadding">
+              <div class="col rowSinpadding">
+                <img class="fotoMaterial":src="material.imagen" :alt="material.name">
+                <small class="PrecioMaterial"><b>Precio:</b> {{material.precio | moneda }}</small>
+              </div>
+                <div class="col rowSinpadding">
+                  <div class="card-body text-white bg-dark cartaMaterialBody">
+                    <h5 class="card-title text-warning">{{material.name}}</h5>
+                    <p class="card-text">{{material.desc}}</p>
+                  </div>
+                </div>
+                  <button @click="agregarCestaMaterial(material);añadeProducto=false;añadeProducto2=true; random(material)" class="btn btn-primary  botonAñadirMaterial">Añadir</button>
             </div>
           </div>
         </div>
       </div>
-        </div>
-</div>
   </div>
-</transition>
+</div><!--fin if material-->
+</transition><!--Material-->
 
-  </div><!--fin app-->
+</div><!--fin app-->
      
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
