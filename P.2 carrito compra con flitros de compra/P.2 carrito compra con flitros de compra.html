@@ -9,78 +9,55 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="CSS.css">
 </head>
-    <style>
-      .cartaAncho{
-        width: 261px;
-        height: 385px;
-      }
-      .botonAñadir{
-        width: 100%;
-      }
-      .textoJustificado{
-        text-align: justify;
-      }
-      .cantidadCesta{
-        color: #20c997;
-        font-weight: bold;
-        position: relative;
-        right: 34px;
-        bottom: 11px;
-        font-size: 23px;
-      }
-      .bi-cart2::before {
-        content: "\f243";
-        font-size: 45px;
-        z-index: 1;
-        position: relative;
-        color: #cbcbcb4a;
-      }
-      .dropdown-toggle::after {
-        font-size: 30px;
-      }
-      .dropdown-menu {
     
-    min-width: 14rem;
-   
-}
-    </style>
 <body>
   <div id="app" class=""><!--los datos del data que quieras manipular deben de estar en este div app-->
     <nav class="navbar navbar-dark bg-primary">
       <div class="d-flex bd-highlight">
+  <!--filtros-->
         <button type="button" class="btn btn-primary w-100 ms-2" @click="ver = !ver">Filtro precios</button>
           <transition name="animaInput"
             enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
             leave-active-class="animate__animated animate__fadeOutUp animate__faster">
                 <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
               <select class="form-select" aria-label="Default select" v-model="preciomax" v-if="ver"><!--va con el elemento click del boton y en el objeto tienes que ponerlo a true-->
-                  <option disabled value="">Seleccione un precio máximo</option><!--disabled value="" en blanco para que no pueda ser selecionado-->
-                  <option>150</option>
-                  <option>250</option>
-                  <option>350</option>
-                  <option value="999">Todo</option>
+                  <option disabled value=""></option><!--disabled value="" en blanco para que no pueda ser selecionado-->
+                  <option value="150">Menos de 150€</option>
+                  <option value="250">Menos de 250€</option>
+                  <option value="350">Menos de 350€</option>
+                  <option value="999">Todos los precios</option>
               </select>
           </transition>
-      
+  <!--Cesta-->
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-cart2"></i><span class="cantidadCesta">{{cesta.length | dosDigitos('0')}}</span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <span v-if="añadeProducto">Añade productos al carrito</span>
-              <div v-for="(curso, index) in cesta" :key="index">
-            
-                  <a class="dropdown-item" href="#">{{curso.name}} {{curso.precio | moneda }}</a>
-           
+              <h6 class="h6cesta">Cesta</h6>
+              <span v-if="añadeProducto" class="text-center d-block cestaNombrePrecio">Añade productos al carrito</span>
+              <div v-for="(cursoCesta, index) in cesta" :key="index">
+                  <a class="dropdown-item" href="#">
+                    <img class="cestaImagen" :src="cursoCesta.curso.imagen" alt="cursoCesta.curso.name">
+                      <div class="cestaNombrePrecio"><p>{{cursoCesta.curso.name}}: </p> <span class="cestaPrecio">  {{cursoCesta.curso.precio | moneda }}</span></div>  
+                        <span :class="{'conStock':cursoCesta.curso.color,'SinStock': !cursoCesta.curso.color}" class="d-flex stock" >{{cursoCesta.curso.stock}}</span>
+                  </a>
+                  <hr>
               </div>
             </ul>
           </div>
+  <!--Cursos-->    
+            <button type="button" class="btn btn-primary w-100 ms-2" @click="VerCurso==true">Cursos</button> 
+  <!--Material--> 
+            <button type="button" class="btn btn-primary w-100 ms-2" @click="VerMaterial==true;VerCurso==false">Material escolar</button> 
       </div>
     </nav>
-   
+<!--Cursos------------------------------------------------------------------------>
+<div v-if="VerCurso"class="tituloCurso container">Cursos</div>
   <div class="container">
-<!--transicion grupal--> <transition-group class="row " name="animaCursos" 
+<!--transicion grupal--> <transition-group class="row encuadreCurso" name="animaCursos" 
       enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
       leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
           <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
@@ -92,74 +69,37 @@
                 <h5 class="card-title">{{curso.name}}</h5>
                   <p class="card-text">{{curso.desc}}</p>
                     <span><b>Precio:</b> {{curso.precio | moneda }}</span>
-                      <button @click="agregarCesta(curso);añadeProducto=false" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">Añadir</button>
+                      <button @click="agregarCesta(curso);añadeProducto=false; random(curso)" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">Añadir</button>
             </div>
           </div>
         </div>
       </transition-group>  
   </div>
-      
+ <!--Material escolar------------------------------------------------------------------------------------------->
+ <div v-if="VerMaterial"class="container">
+    <ul> 
+      <li> 
+        <div class="col mt-3 d-flex justify-content-center" v-for="material in materialEscolar">
+          <div class=" cartaAncho">
+            <img class="imagenMaterial" :src="material.imagen" :alt="material.name">
+              <div class="">
+                <h5 class="">{{material.name}}</h5>
+                  <p class="t">{{material.desc}}</p>
+                    <span><b>Precio:</b> {{material.precio | moneda }}</span>
+                      <button @click="agregarCesta(curso);añadeProducto=false; random(curso)" class="">Añadir</button>
+              </div>
+          </div>
+        </div>
+      </li>  
+    </ul>   
+  </div>
+ 
   </div><!--fin app-->
      
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-<script>
-  
-var data = {
-  el: '#example-3',
-    ver: false,
-    preciomax :999 ,//muestra todos los cursos
-    cesta:[],
-    añadeProducto:true,
-  cursos: [
-    {
-      "id":1,
-      "name": "Curso Wordpress",
-      "imagen": "IMG/wordpress.jpg",
-      "desc": "El curso más potente para aprender todo lo necesario sobre Wordpress",
-      "precio": 110.10,
-    },
-    {
-      "id":2,
-      "name": "Curso Front End",
-      "imagen": "IMG/fullstack.jpg",
-      "desc": "El curso más potente para aprender todo lo necesario sobre Frontend ",
-      "precio": 220.20,
-    } ,
-    {
-      "id":3,
-      "name": "Curso Fullstack",
-      "imagen": "IMG/frontend.jpg",
-      "desc": "El curso más potente para aprender todo lo necesario sobre Frontend y Backend ",
-      "precio": 420,
-    } ,
-    { 
-      "id":4,
-      "name": "Curso SEO",
-      "imagen": "IMG/seo.png",
-      "desc": "El curso más potente para aprender todo lo necesario sobre SEO y posicionamiento Web",
-      "precio": 300,
-    } 
-  ]
-}
-var app = new Vue({
-      el: '#app',
-      filters:{
-        moneda:function (valor) {  
-          return Number.parseFloat(valor).toFixed(2) + "€";
-         },
-        dosDigitos(value, pattern = ""){ // dos digitos
-          return value.toString().padStart(2,pattern)
-       }
-      },
-      methods:{
-        agregarCesta:function(curso){
-          this.cesta.push(curso)
-        }
-      },
-      data: data,
-    })
-</script>
+
+<script src="js.js"></script>
 </body>
 </html>

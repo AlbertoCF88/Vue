@@ -1,0 +1,119 @@
+.navbar {
+    padding-top: 0; 
+    padding-bottom: 0; 
+  }
+  .tituloCurso{
+    background: #fed55c;
+    margin-top: 1rem;
+    height: 2rem;
+    text-align: center;
+    font-size: 19px;
+    font-family: monospace;
+    box-shadow: 1px 4px 7px rgb(134 123 123 / 47%), 0px -13px 8px 0px rgb(134 123 123 / 47%) inset;
+    border-radius: 15px 15px; 
+    color: white;
+    font-weight: bold;
+  }
+  .form-select{
+    margin: 11px 0;
+    height: fit-content;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .encuadreCurso{
+    margin-bottom: 2rem;
+  }
+  .cartaAncho{
+    width: 261px;
+    height: 385px;
+  }
+  .cartaAncho:hover{
+   
+    animation: cartaHover 1s cubic-bezier(0.18, 0.89, 0.32, 1.28)  forwards;
+  }
+  @keyframes cartaHover {
+      0%{            
+        box-shadow: 0px 0px 0px rgb(134 123 123 / 47%);
+      }  
+      100%{
+        box-shadow: 6px 8px 5px rgb(134 123 123 / 47%);
+         }
+     }
+  .botonAñadir{
+    width: 100%;
+  }
+  .textoJustificado{
+    text-align: justify;
+  }
+  .cantidadCesta{
+    color: #20c997;
+    font-weight: bold;
+    position: relative;
+    right: 34px;
+    bottom: 11px;
+    font-size: 23px;
+  }
+  .bi-cart2::before {
+    content: "\f243";
+    font-size: 45px;
+    z-index: 1;
+    position: relative;
+    color: #cbcbcb4a;
+  }
+  .dropdown-toggle::after {
+    font-size: 30px;
+  }
+  .dropdown-menu {
+    min-width: 17.5rem;
+  }
+  .dropdown-menu[data-bs-popper] {
+    margin-top: 0;
+    right: -32px;
+    left: auto;
+    border-radius: 10px 10px 0 0;
+  }
+  .h6cesta{
+    background: #1ec997;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    bottom: 9px;
+    padding: 5px 17px;
+  }
+  .cestaImagen{
+    width: 20%;
+    padding-right: 8px;
+  } 
+  .dropdown-item {
+    font-size: smaller;
+  }
+  .h6, h6 {
+    padding-left: 1rem;
+  }
+  hr:not([size]) {
+    color: #0b6efd;
+  }
+  hr {
+    margin: 0.5rem;
+    width: 90%;
+  }
+  .conStock{
+    color:green;
+    margin-top: 4px;
+  }
+  .SinStock{
+   color: red;
+    margin-top: 4px;
+  }
+  .cestaNombrePrecio{
+    display: inline-flex;
+    font-weight: bold;
+  }
+  .cestaPrecio{
+    font-weight: bold;
+    color:red;
+    margin-left: 0.5rem;
+  }
+  .imagenMaterial{
+    width: 20%;
+  }
