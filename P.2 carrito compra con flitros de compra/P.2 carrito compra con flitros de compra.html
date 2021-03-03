@@ -14,23 +14,13 @@
     
 <body>
   <div id="app" class=""><!--los datos del data que quieras manipular deben de estar en este div app-->
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar fixed-top bg-primary">
       <div class="d-flex bd-highlight">
-  <!--filtros-->
-        <button type="button" class="btn btn-primary w-100 ms-2" @click="ver = !ver">Filtro precios</button>
-          <transition name="animaInput"
-            enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
-            leave-active-class="animate__animated animate__fadeOutUp animate__faster">
-                <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
-              <select class="form-select" aria-label="Default select" v-model="preciomax" v-if="ver"><!--va con el elemento click del boton y en el objeto tienes que ponerlo a true-->
-                  <option disabled value=""></option><!--disabled value="" en blanco para que no pueda ser selecionado-->
-                  <option value="150">Menos de 150€</option>
-                  <option value="250">Menos de 250€</option>
-                  <option value="350">Menos de 350€</option>
-                  <option value="999">Todos los precios</option>
-              </select>
-          </transition>
-  <!--Cesta-->
+         <!--Cursos-->    
+         <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceCurso()">Cursos</button> 
+         <!--Material--> 
+          <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceMaterial()">Material escolar</button> 
+        <!--Cesta-->
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-cart2"></i><span class="cantidadCesta">{{cesta.length | dosDigitos('0')}}</span>
@@ -48,16 +38,31 @@
               </div>
             </ul>
           </div>
-  <!--Cursos-->    
-            <button type="button" class="btn btn-primary w-100 ms-2" @click="VerCurso==true">Cursos</button> 
-  <!--Material--> 
-            <button type="button" class="btn btn-primary w-100 ms-2" @click="VerMaterial==true;VerCurso==false">Material escolar</button> 
+ 
       </div>
     </nav>
 <!--Cursos------------------------------------------------------------------------>
-<div v-if="VerCurso"class="tituloCurso container">Cursos</div>
-  <div class="container">
-<!--transicion grupal--> <transition-group class="row encuadreCurso" name="animaCursos" 
+<transition name="animaEncuadre"
+enter-active-class="animate__animated animate__fadeIn animate__faster">
+<div v-if="VerCurso"class="container encuadreEnlaces">
+    <div class="tituloCurso container">Cursos</div>
+    <!--filtros-->
+    <button type="button" class="btn btn-primary d-flex justify-content-center botonFiltro" @click="ver = !ver">Filtro precios</button>
+    <transition name="animaInput"
+      enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
+      leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+        <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
+        <select class="form-select" aria-label="Default select" v-model="preciomax" v-if="ver"><!--va con el elemento click del boton y en el objeto tienes que ponerlo a true-->
+            <option disabled value=""></option><!--disabled value="" en blanco para que no pueda ser selecionado-->
+            <option value="150">Menos de 150€</option>
+            <option value="250">Menos de 250€</option>
+            <option value="350">Menos de 350€</option>
+            <option value="999">Todos los precios</option>
+        </select>
+    </transition>
+    <!--Fin filtros-->
+    <!--Carta-->
+<!--transicion grupal--> <transition-group class="row" name="animaCursos" 
       enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
       leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
           <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
@@ -75,25 +80,32 @@
         </div>
       </transition-group>  
   </div>
+</transition>
  <!--Material escolar------------------------------------------------------------------------------------------->
- <div v-if="VerMaterial"class="container">
-    <ul> 
-      <li> 
-        <div class="col mt-3 d-flex justify-content-center" v-for="material in materialEscolar">
-          <div class=" cartaAncho">
-            <img class="imagenMaterial" :src="material.imagen" :alt="material.name">
-              <div class="">
-                <h5 class="">{{material.name}}</h5>
-                  <p class="t">{{material.desc}}</p>
-                    <span><b>Precio:</b> {{material.precio | moneda }}</span>
-                      <button @click="agregarCesta(curso);añadeProducto=false; random(curso)" class="">Añadir</button>
-              </div>
+ <transition name="animaEncuadre "class="row"
+ enter-active-class="animate__animated animate__fadeIn animate__faster">
+  <div v-if="VerMaterial"class="container encuadreEnlaces">
+    <div class="row">
+    <div class="col d-flex justify-content-center" v-for="material in materialEscolar">
+      <div class="card cartaMaterial mt-3">
+        <div class="row rowSinpadding">
+          <div class="col rowSinpadding">
+            <img class="fotoMaterial":src="material.imagen" :alt="material.name">
+          </div>
+          <div class="col rowSinpadding">
+            <div class="card-body text-white bg-dark cartaMaterialBody">
+              <h5 class="card-title">{{material.name}}</h5>
+              <p class="card-text">{{material.desc}}</p>
+              <!-- <button @click="agregarCesta(material);añadeProducto=false; random(material)" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">Añadir</button> -->
+            </div>
           </div>
         </div>
-      </li>  
-    </ul>   
+      </div>
+        </div>
+</div>
   </div>
- 
+</transition>
+
   </div><!--fin app-->
      
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

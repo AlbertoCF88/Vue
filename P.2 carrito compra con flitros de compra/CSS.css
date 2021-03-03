@@ -1,8 +1,12 @@
 .navbar {
     padding-top: 0; 
     padding-bottom: 0; 
-  }
-  .tituloCurso{
+}
+.encuadreEnlaces{
+    margin-top: 5rem!important;
+    margin-bottom: 2rem;
+}
+.tituloCurso{
     background: #fed55c;
     margin-top: 1rem;
     height: 2rem;
@@ -13,107 +17,127 @@
     border-radius: 15px 15px; 
     color: white;
     font-weight: bold;
-  }
-  .form-select{
-    margin: 11px 0;
+}
+.form-select{
+    width: 90%;
+    margin: 0 auto ;
     height: fit-content;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  .encuadreCurso{
-    margin-bottom: 2rem;
-  }
-  .cartaAncho{
+}
+.botonFiltro{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+}
+.cartaAncho{
     width: 261px;
     height: 385px;
-  }
-  .cartaAncho:hover{
-   
+}
+.cartaAncho:hover{
     animation: cartaHover 1s cubic-bezier(0.18, 0.89, 0.32, 1.28)  forwards;
-  }
-  @keyframes cartaHover {
-      0%{            
+}
+@keyframes cartaHover {
+    0%{            
         box-shadow: 0px 0px 0px rgb(134 123 123 / 47%);
       }  
       100%{
         box-shadow: 6px 8px 5px rgb(134 123 123 / 47%);
          }
-     }
-  .botonAñadir{
+}
+.botonAñadir{
     width: 100%;
-  }
-  .textoJustificado{
+}
+.textoJustificado{
     text-align: justify;
-  }
-  .cantidadCesta{
+}
+.cantidadCesta{
     color: #20c997;
     font-weight: bold;
     position: relative;
     right: 34px;
     bottom: 11px;
     font-size: 23px;
-  }
-  .bi-cart2::before {
+}
+.bi-cart2::before {
     content: "\f243";
     font-size: 45px;
     z-index: 1;
     position: relative;
     color: #cbcbcb4a;
-  }
-  .dropdown-toggle::after {
+}
+.dropdown-toggle::after {
     font-size: 30px;
-  }
-  .dropdown-menu {
+}
+.dropdown-menu {
     min-width: 17.5rem;
-  }
-  .dropdown-menu[data-bs-popper] {
+}
+.dropdown-menu[data-bs-popper] {
     margin-top: 0;
-    right: -32px;
+    right: 16px;
     left: auto;
     border-radius: 10px 10px 0 0;
-  }
-  .h6cesta{
+}
+.h6cesta{
     background: #1ec997;
     color: white;
     border-radius: 10px 10px 0 0;
     position: relative;
     bottom: 9px;
     padding: 5px 17px;
-  }
-  .cestaImagen{
+}
+.cestaImagen{
     width: 20%;
     padding-right: 8px;
-  } 
-  .dropdown-item {
+} 
+.dropdown-item {
     font-size: smaller;
-  }
-  .h6, h6 {
+}
+.h6, h6 {
     padding-left: 1rem;
-  }
-  hr:not([size]) {
+}
+hr:not([size]) {
     color: #0b6efd;
-  }
-  hr {
+}
+hr {
     margin: 0.5rem;
     width: 90%;
-  }
-  .conStock{
+}
+.conStock{
     color:green;
     margin-top: 4px;
-  }
-  .SinStock{
+}
+.SinStock{
    color: red;
     margin-top: 4px;
-  }
-  .cestaNombrePrecio{
+}
+.cestaNombrePrecio{
     display: inline-flex;
     font-weight: bold;
-  }
-  .cestaPrecio{
+}
+.cestaPrecio{
     font-weight: bold;
     color:red;
     margin-left: 0.5rem;
-  }
-  .imagenMaterial{
-    width: 20%;
-  }
+}
+.fotoMaterial{
+    padding: 22px;
+    width: 100%;
+    margin: 13px auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;;
+}
+.cartaMaterial{
+    width: 225px;
+    height: 151px;
+}
+.cartaMaterialBody{
+    max-height: 149px;
+    height: 149px;
+    width: 138px;
+}
+.rowSinpadding{
+    padding-right:0 !important;
+    padding-left: 0 !important;
+}
