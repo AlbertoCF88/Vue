@@ -31,7 +31,10 @@
               <div v-for="(cursoCesta, index) in cesta" :key="index">
                   <a class="dropdown-item" href="#">
                     <img class="cestaImagen" :src="cursoCesta.curso.imagen" alt="cursoCesta.curso.name">
-                      <div class="cestaNombrePrecio"><p>{{cursoCesta.curso.name}}: </p> <span class="cestaPrecio">  {{cursoCesta.curso.precio | moneda }}</span></div>  
+                      <div class="cestaNombrePrecio">
+                        <p>{{cursoCesta.curso.name}}: </p> 
+                          <span class="cestaPrecio">  {{cursoCesta.curso.precio | moneda }}</span>
+                      </div>  
                         <span :class="{'conStock':cursoCesta.curso.color,'SinStock': !cursoCesta.curso.color}" class="d-flex stock" >{{cursoCesta.curso.stock}}</span>
                   </a>
                   <hr>
@@ -43,7 +46,15 @@
                     <div v-for="(materialCesta, indexo) in cestaMaterial" :key="indexo">
                       <a class="dropdown-item" href="#">
                         <img class="cestaImagen" :src="materialCesta.material.imagen" alt="materialCesta.material.name">
-                          <div class="cestaNombrePrecio"><p>{{materialCesta.material.name}}: </p> <span class="cestaPrecio">  {{materialCesta.material.precio | moneda }}</span></div>
+                          <div class="cestaNombrePrecio">
+                            <p>{{materialCesta.material.name}}: </p> 
+                              <span class="cestaPrecio">  {{materialCesta.material.precio | moneda }}</span>
+                            </div>
+                            <div class="">
+                              <p class="cantidadMaterial">Cantidad:</p>
+                              <span class="cestaPrecio">{{materialCesta.cant}}</span>
+                            </div>
+                           
                             <span :class="{'conStock':materialCesta.material.color,'SinStock': !materialCesta.material.color}" class="d-flex stock" >{{materialCesta.material.stock}}</span>
                       </a>
                       <hr>

@@ -146,9 +146,9 @@ el: '#app',
             }
           });    
           if(exitente.length){
-            this.cestaMaterial[prodExistente]
+            this.cestaMaterial[prodExistente].cant++;
           }else{
-            this.cestaMaterial.push({material:material})
+            this.cestaMaterial.push({material:material, cant:1})
           }
           /*filtro pra no repetir cursos*/
       },
