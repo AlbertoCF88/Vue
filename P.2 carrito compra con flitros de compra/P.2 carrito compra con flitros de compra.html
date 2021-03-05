@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" @click="e()">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,122 +8,153 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-
+    <link href="https://code.jquery.com/jquery-git.slim.min.js">
     <link rel="stylesheet" href="CSS.css">
 </head>
     
-<body>
-  <div id="app" class=""><!--los datos del data que quieras manipular deben de estar en este div app-->
+<body >
+  <div id="app"><!--los datos del data que quieras manipular deben de estar en este div app-->
     <nav class="navbar fixed-top bg-primary">
       <div class="d-flex bd-highlight">
   <!--Cursos-------------------------->    
-         <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceCurso()">Cursos</button> 
+        <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceCurso()">Cursos</button> 
   <!--Material---------------------------> 
-          <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceMaterial()">Material escolar</button> 
-  <!--Cesta------------------------------>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-cart2"></i><span class="cantidadCesta">{{cesta.length + cestaMaterial.length| dosDigitos('0')}}</span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <h6 class="h6cesta">Cesta cursos</h6>
-              <span v-if="añadeProducto" class="text-center d-block cestaNombrePrecio">Añade productos al carrito</span>
+        <button type="button" class="btn btn-primary w-100 ms-2" @click="enlaceMaterial()">Material escolar</button> 
+  <!--Cesta ------------------------------>
+    <div class="dropdown" >
+      <button class="btn btn-primary dropdown-toggle" type="button" @click="drop=!drop">
+        <i class="bi bi-cart2"></i>
+        <span class="cantidadCesta">{{cesta.length +  cestaMaterialTotalUnidad | dosDigitos('0')}}</span>
+      </button>
+        <ul id="drop" class="dropdown-menu show" v-if="drop">
+          <img  class="imgCarrito" src="IMG/carrito.png" alt="carrito">
+          <span v-if="añadeProducto" class="text-center d-block cestaNombrePrecio">Añade productos al carrito</span>
+          <h2 class="cestaPrecio">Total: {{cestaMaterialTotalPrecio + cestaCursoTotalPrecio| moneda}}</h2> <!--js-->
+  <!--cesta cursos------------------------------->
+          <div id="Cursos" class="fondoMaterialCurso">
+            <h6 v-if="verTotalCurso"class="h6cesta">Cesta cursos</h6>
               <div v-for="(cursoCesta, index) in cesta" :key="index">
-                  <a class="dropdown-item" href="#">
-                    <img class="cestaImagen" :src="cursoCesta.curso.imagen" alt="cursoCesta.curso.name">
-                      <div class="cestaNombrePrecio">
-                        <p>{{cursoCesta.curso.name}}: </p> 
-                          <span class="cestaPrecio">  {{cursoCesta.curso.precio | moneda }}</span>
-                      </div>  
-                        <span :class="{'conStock':cursoCesta.curso.color,'SinStock': !cursoCesta.curso.color}" class="d-flex stock" >{{cursoCesta.curso.stock}}</span>
-                  </a>
+                <div class="containerCesta">
+                  <img class="cestaImagen" :src="cursoCesta.curso.imagen" alt="cursoCesta.curso.name">
+                    <div class="cestaNombrePrecio d-flex">
+                      <p>{{cursoCesta.curso.name}}: </p> 
+                      <span class="cestaPrecio">{{cursoCesta.curso.precio | moneda }}</span>
+                    </div>  
+                      <span :class="{'conStock':cursoCesta.curso.color,'SinStock': !cursoCesta.curso.color}" class="d-flex stock">
+                      {{cursoCesta.curso.stock}}
+                      </span>
+                </div>
                   <hr>
               </div>
-    <!--Cesta materiales----------------------------------------------->
-              <div v-if="añadeProducto2">
-                <li><hr class="dropdown-divider"></li>
-                  <h6 class="h6cestaMaterial">Cesta materiales</h6>
-                    <div v-for="(materialCesta, indexo) in cestaMaterial" :key="indexo">
-                      <a class="dropdown-item" href="#">
-                        <img class="cestaImagen" :src="materialCesta.material.imagen" alt="materialCesta.material.name">
-                          <div class="cestaNombrePrecio">
-                            <p>{{materialCesta.material.name}}: </p> 
-                              <span class="cestaPrecio">  {{materialCesta.material.precio | moneda }}</span>
-                            </div>
-                            <div class="">
-                              <p class="cantidadMaterial">Cantidad:</p>
-                              <span class="cestaPrecio">{{materialCesta.cant}}</span>
-                            </div>
-                           
-                            <span :class="{'conStock':materialCesta.material.color,'SinStock': !materialCesta.material.color}" class="d-flex stock" >{{materialCesta.material.stock}}</span>
-                      </a>
-                      <hr>
-                    </div>
-                </div><!--if-->
-            </ul>
-          </div>
+                <div v-if="verTotalCurso">
+                  <div v-if="añadeProducto" class="separadorMateTotal dropdown-divider"></div>
+                    <span class="cestaPrecio text-success">Unidad total: {{cesta.length}}.und </span>
+                    <span class="cestaPrecio text-success d-flex">Precio cursos total: {{cestaCursoTotalPrecio| moneda}}</span>
+                </div> <!--cestaCursoTotalPrecio viene del js-->
+          </div><!--fin div cursos-->
+  <!--Cesta materiales----------------------------------------------->
+      <div id="Material" class="fondoMaterialCesta" v-if="añadeProducto2">
+        <li><hr class="dropdown-divider"></li>
+        <h6 class="h6cestaMaterial">Cesta materiales</h6>
+          <div v-for="(materialCesta, index) in cestaMaterial" :key="index">
+            <div class="containerCesta">
+              <img class="cestaImagen" :src="materialCesta.material.imagen" alt="materialCesta.material.name">
+                <div class="cestaNombrePrecio">
+                    <p>{{materialCesta.material.name}}: </p> 
+                    <span class="cestaPrecio">  {{materialCesta.material.precio | moneda }}</span>
+                </div>
+                  <div class="d-flex">
+                    <p class="cantidadMaterial">Cantidad:</p>
+                    <span class="cestaPrecio">{{materialCesta.cant}}.und</span>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-primary botonCantidad" @click="agregarCestaMaterial(cant)">
+                          +
+                        </button> 
+                        <button type="button" class="btn btn-danger botonCantidad" @click="">
+                          -
+                        </button> 
+                      </div>
+                  </div>
+                    <span :class="{'conStock':materialCesta.material.color,'SinStock':!materialCesta.material.color}" class="d-flex stock">
+                      {{materialCesta.material.stock}}
+                    </span>
+            </div>
+              <hr>
+          </div><!--Fin curso for-->
+            <span class="cestaPrecio text-success">Unidad total: {{cestaMaterialTotalUnidad }}.und </span> <!--js-->
+            <span class="cestaPrecio  text-success d-flex">
+              Precio material total: {{cestaMaterialTotalPrecio | moneda}}
+            </span><!--viene js-->
+      </div><!--Fin material if-->      
+        </ul>
+    </div><!--drop-->
       </div>
     </nav>
 <!--Cursos------------------------------------------------------------------------>
-<transition name="animaEncuadre"
-enter-active-class="animate__animated animate__fadeIn animate__faster">
-<div v-if="VerCurso"class="container encuadreEnlaces">
+  <div v-if="VerCurso"class="container encuadreEnlaces enlace">
     <div class="tituloCurso container">Cursos</div>
     <!--filtros-->
-    <button type="button" class="btn btn-primary d-flex justify-content-center botonFiltro" @click="ver = !ver">Filtro precios</button>
-    <transition name="animaInput"
-      enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
-      leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+    <button type="button" class="btn btn-primary d-flex justify-content-center botonFiltro" @click="ver=!ver">
+      Filtro precios
+    </button>
+      <transition name="animaInput"
+        enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
+        leave-active-class="animate__animated animate__fadeOutUp animate__faster">
         <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
-        <select class="form-select" aria-label="Default select" v-model="preciomax" v-if="ver"><!--va con el elemento click del boton y en el objeto tienes que ponerlo a true-->
-            <option disabled value=""></option><!--disabled value="" en blanco para que no pueda ser selecionado-->
+          <select class="form-select" aria-label="Default select" v-model="preciomax" v-if="ver">
+            <!--va con el elemento click del boton y en la lógica tienes que ponerlo a true-->
+            <option disabled value=""></option><!--disabled value="" en blanco para que no pueda ser seleccionado-->
             <option value="150">Menos de 150€</option>
             <option value="250">Menos de 250€</option>
             <option value="350">Menos de 350€</option>
             <option value="999">Todos los precios</option>
-        </select>
-    </transition>
+          </select>
+      </transition>
     <!--Fin filtros-->
-    <!--Carta-->
-<!--transicion grupal--> <transition-group class="row" name="animaCursos" 
-      enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
-      leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
-          <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
-        <div class="col mt-3 d-flex justify-content-center" v-for="curso in cursos" v-if="curso.precio<=preciomax" :key="curso.id"><!--var curso guardame cada objetos de cursos-->
-          <!--v-if muestra los curos segun precio en preciomax-->    <!--:key="" es de la transicion grupal-->
-            <div class="card cartaAncho">
-            <img class="card-img-top" :src="curso.imagen" :alt="curso.name"> <!--ojo con :src  sirve para sacar el valor que contiene el objeto-->
+  <!--Carta cursos-->
+  <transition-group class="row" name="animaCursos" 
+    enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
+    leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
+  <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
+      <div class="col mt-3 d-flex justify-content-center"v-for="curso in cursos"v-if="curso.precio<=preciomax":key="curso.id"> 
+      <!--var curso guardarme cada objetos de cursos-->
+      <!--v-if muestra los cursos según precio en preciomax--> <!--:key="" es de la transición grupal-->
+        <div class="card cartaAncho">
+          <img class="card-img-top" :src="curso.imagen" :alt="curso.name">
+          <!--ojo con :src  sirve para sacar el valor que contiene el objeto-->
             <div class="card-body position-relative">
-                <h5 class="card-title">{{curso.name}}</h5>
-                  <p class="card-text">{{curso.desc}}</p>
-                    <span><b>Precio:</b> {{curso.precio | moneda }}</span>
-                      <button @click="agregarCesta(curso);añadeProducto=false" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">Añadir</button>
+              <h5 class="card-title">{{curso.name}}</h5>
+              <p class="card-text">{{curso.desc}}</p>
+              <span><b>Precio:</b> {{curso.precio | moneda }}</span>
+              <button @click="agregarCesta(curso);añadeProducto=false;verTotalCurso=true"
+                class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">
+                Añadir
+              </button>
             </div>
-          </div>
         </div>
-      </transition-group>  
-  </div>
-</transition>
- <!--Material escolar------------------------------------------------------------------------------------------->
- <transition name="animaEncuadre "class="row"
- enter-active-class="animate__animated animate__fadeIn animate__faster">
- <div v-if="VerMaterial" id="Material">
-  <div class="container encuadreEnlaces">
-    <div class="tituloCurso container">Material escolar</div>
-    <div class="row">
-      <div class="col d-flex justify-content-center mt-5" v-for="material in materialEscolar">
-          <div class="card cartaMaterial mt-3">
-            <div class="row rowSinpadding">
-              <div class="col rowSinpadding">
-                <img class="fotoMaterial":src="material.imagen" :alt="material.name">
-                <small class="PrecioMaterial"><b>Precio:</b> {{material.precio | moneda }}</small>
-              </div>
+      </div>
+  </transition-group>  
+</div><!--fin app-->
+
+<div id="app">
+  <!--Material escolar------------------------------------------------------------------------------------------->
+  <div v-if="VerMaterial"class="enlace">
+    <div class="container encuadreEnlaces">
+      <div class="tituloCurso container">Material escolar</div>
+        <div class="row">
+          <div class="col d-flex justify-content-center mt-5" v-for="material in materialEscolar">
+            <div class="card cartaMaterial mt-3">
+              <div class="row rowSinpadding">
                 <div class="col rowSinpadding">
-                  <div class="card-body text-white bg-dark cartaMaterialBody">
-                    <h5 class="card-title text-warning">{{material.name}}</h5>
-                    <p class="card-text">{{material.desc}}</p>
-                  </div>
+                  <img class="fotoMaterial":src="material.imagen" :alt="material.name">
+                  <small class="PrecioMaterial"><b>Precio:</b> {{material.precio | moneda }}</small>
                 </div>
+                  <div class="col rowSinpadding">
+                    <div class="card-body text-white bg-dark cartaMaterialBody">
+                      <h5 class="card-title text-warning">{{material.name}}</h5>
+                      <p class="card-text">{{material.desc}}</p>
+                    </div>
+                  </div>
                   <button @click="agregarCestaMaterial(material);añadeProducto=false;añadeProducto2=true; random(material)" class="btn btn-primary  botonAñadirMaterial">Añadir</button>
             </div>
           </div>
@@ -131,7 +162,6 @@ enter-active-class="animate__animated animate__fadeIn animate__faster">
       </div>
   </div>
 </div><!--fin if material-->
-</transition><!--Material-->
 
 </div><!--fin app-->
      

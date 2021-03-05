@@ -2,13 +2,14 @@ var data = {
 el: '#example-3',
   ver: false,
   preciomax :999 ,//muestra todos los cursos
-  cesta:[],
-  cestaMaterial:[],
+  cesta:[],//cesta cursos
+  cestaMaterial:[],//cesta material
   añadeProducto:true,/*oculta texto cesta */
   añadeProducto2:false,/*oculta texto cesta */
-  VerCurso:true,
-  VerMaterial:false,
-  hover:true,
+  verTotalCurso:false,//mostrar precio total cursos
+  VerCurso:true,//enlaces
+  VerMaterial:false,//enlaces
+  drop:false,// carrito
 
   total:"",
 cursos: [
@@ -53,7 +54,7 @@ materialEscolar:[
     {
         "id":1,
         "name": "Bolígrafos",
-        "imagen": "IMG/bolis.jpg",
+        "imagen": "IMG/bolis.png",
         "desc": "Bolígrafos personalizados",
         "precio": 1,
         "stock":"",
@@ -62,7 +63,7 @@ materialEscolar:[
       {
         "id":2,
         "name": "subcarpeta",
-        "imagen": "IMG/subcarpeta.jpg",
+        "imagen": "IMG/subcarpeta.png",
         "desc": "Subcarpeta Exacompta din A4",
         "precio": 13.10,
         "stock":"",
@@ -71,7 +72,7 @@ materialEscolar:[
       {
         "id":3,
         "name": "Gomas",
-        "imagen": "IMG/gomas.jpg",
+        "imagen": "IMG/gomas.png",
         "desc": "Gomas 430",
         "precio": 1.20,
         "stock":"",
@@ -80,7 +81,7 @@ materialEscolar:[
       {
         "id":4,
         "name": "Papel",
-        "imagen": "IMG/papel.jpg",
+        "imagen": "IMG/papel.png",
         "desc": "Papel Din A4 80gr 500 Hojas",
         "precio": 5.5,
         "stock":"",
@@ -98,6 +99,29 @@ el: '#app',
           return value.toString().padStart(2,pattern)
        }
       },
+    computed:{
+      cestaCursoTotalPrecio:function () {
+        let suma = 0;
+        for (key in this.cesta){
+          suma = suma + (this.cesta[key].curso.precio );
+        }
+        return suma;
+      },
+      cestaMaterialTotalPrecio:function () {
+        let suma = 0;
+        for (key in this.cestaMaterial){
+          suma = suma + (this.cestaMaterial[key].material.precio * this.cestaMaterial[key].cant);
+        }
+        return suma;
+      },
+      cestaMaterialTotalUnidad:function () {
+        let cant = 0;
+        for (key in this.cestaMaterial){
+          cant = cant + this.cestaMaterial[key].cant;
+        }
+        return cant;
+      },
+    },
     methods:{
         enlaceCurso:function(){
             this.VerCurso=true; 
