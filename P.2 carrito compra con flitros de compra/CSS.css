@@ -4,7 +4,7 @@
 }
 .encuadreEnlaces{
     margin-top: 3.9rem!important;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 .tituloCurso{
     background: #0b6efd;
@@ -84,6 +84,7 @@
     display: none; 
 }
 .dropdown-menu{
+    box-shadow: 0px -20px 20px 20px #7e7e7e30 inset,5px 12px 20px 2px #82828266;
     white-space: nowrap;
     overflow-y: scroll;
     height: 80vh;
@@ -146,11 +147,24 @@ hr {
     width: 225px;
     height: 151px;
 }
+.cartaMaterial:hover{
+    animation: hoverMaterial 1s cubic-bezier(0.18, 0.89, 0.32, 1.28)  forwards;
+}    
+
+@keyframes hoverMaterial {
+    0%{            
+       
+    }  
+    100%{
+        box-shadow: 8px 20px 20px 20px rgb(134 123 123 / 47%);
+       }
+   }
 .cartaMaterialBody{
     max-height: 149px;
     height: 149px;
     width: 138px;
 }
+
 .rowSinpadding{
     padding-right:0 !important;
     padding-left: 0 !important;
@@ -175,6 +189,10 @@ hr {
 }
 .botonCantidad{
     top: -7px;
+}
+.grupoBotonCantidad{
+    position: fixed !important;
+    left: 187px;
 }
 .separadorMateTotal{
     position: relative;
@@ -210,7 +228,7 @@ hr {
 
   .enlace{
     opacity: 0;
-    animation: enlaceAnima 1s/*duracion*/ cubic-bezier(0.18, 0.89, 0.32, 1.28)  /*retraso*/ forwards;
+    animation: enlaceAnima 1s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
 }
 @keyframes enlaceAnima {
     0%{            
@@ -220,7 +238,6 @@ hr {
         opacity: 1;
        }
    }
-
   /*Fin scroll cesta*/
   /*movil muy pequeño*/
   @media (max-width: 280px) {
@@ -231,6 +248,19 @@ hr {
         max-height: 333px;
         margin-top: -1px;
         right: -3px;
+        width: 284px;
+    }
+  }
+    /*Fin scroll cesta*/
+  /*ipad a pc*/
+  @media (min-width: 1024px)  {
+    .dropdown-menu {
+        white-space: nowrap;
+        overflow-y: scroll;
+        max-height: 100vw;
+        height: 93vh;
+        margin-top: -1px;
+        right: 42px;
         width: 284px;
     }
   }

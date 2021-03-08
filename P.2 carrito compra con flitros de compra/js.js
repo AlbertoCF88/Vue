@@ -133,12 +133,7 @@ el: '#app',
             this.VerMaterial=true;
             return  this.VerCurso, this.VerMaterial
         },
-        enlaceMaterial1:function(){
-          this.VerMaterial=false;
-          this.VerMaterial1=true;
-          return  this.VerCurso, this.VerMaterial
-      },
-        agregarCesta:function(curso){//curso o material
+        agregarCesta:function(curso){
             /*al crear una array dentro del array debe ser cambiado en la vista*/
             var prodExistente;
             var exitente;
@@ -155,7 +150,10 @@ el: '#app',
             }else{
                this.cesta.push({curso:curso})
             }
-            /*filtro pra no repetir cursos*/
+            /*filtro para no repetir cursos*/
+        },
+        restarCestaCurso:function (curso) {
+          this.cesta.splice(curso,1) 
         },
         agregarCestaMaterial:function(material){//curso o material
           /*al crear una array dentro del array debe ser cambiado en la vista*/
@@ -176,8 +174,18 @@ el: '#app',
           }
           /*filtro pra no repetir cursos*/
       },
-        random:function(material){//curso o material
-            /*de forma random me pone si esta o no es stock y su color (cambia el stock según clicas el boton aunque  no agregues elementos en la cesta)*/
+      restarCestaMaterial:function (material) {
+        if(this.cestaMaterial[material].cant>1){
+          this.cestaMaterial[material].cant--;//restar 1
+        } else{
+          this.cestaMaterial.splice(material,1) //elimina del array ese curso
+        }
+      },
+      botonUnd:function(material){
+        this.cestaMaterial[material].cant++;
+      },
+        random:function(material){
+            /*de forma random me pone si esta o no es stock y su color (cambia el stock según clicas el boton aunque no agregues elementos en la cesta)*/
             var  colorStock
             var dado=  Math.floor(Math.random()* 2)+1; 
             console.log(`ramdon ${dado}`)

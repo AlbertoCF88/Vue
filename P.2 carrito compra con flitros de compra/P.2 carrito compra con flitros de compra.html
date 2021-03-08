@@ -36,6 +36,7 @@
               <div v-for="(cursoCesta, index) in cesta" :key="index">
                 <div class="containerCesta">
                   <img class="cestaImagen" :src="cursoCesta.curso.imagen" alt="cursoCesta.curso.name">
+                  <button class="btn btn-danger" type="button" @click="restarCestaCurso(index)">Eliminar curso</button>
                     <div class="cestaNombrePrecio d-flex">
                       <p>{{cursoCesta.curso.name}}: </p> 
                       <span class="cestaPrecio">{{cursoCesta.curso.precio | moneda }}</span>
@@ -66,11 +67,11 @@
                   <div class="d-flex">
                     <p class="cantidadMaterial">Cantidad:</p>
                     <span class="cestaPrecio">{{materialCesta.cant}}.und</span>
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-primary botonCantidad" @click="agregarCestaMaterial(cant)">
+                      <div class="btn-group grupoBotonCantidad">
+                        <button type="button" class="btn btn-primary botonCantidad" @click="botonUnd(index)">
                           +
                         </button> 
-                        <button type="button" class="btn btn-danger botonCantidad" @click="">
+                        <button type="button" class="btn btn-danger botonCantidad" @click="restarCestaMaterial(index)">
                           -
                         </button> 
                       </div>
@@ -91,59 +92,63 @@
       </div>
     </nav>
 <!--Cursos------------------------------------------------------------------------>
-  <div v-if="VerCurso"class="container encuadreEnlaces enlace">
-    <div class="tituloCurso container">Cursos</div>
-    <!--filtros-->
-    <button type="button" class="btn btn-primary d-flex justify-content-center botonFiltro" @click="ver=!ver">
-      Filtro precios
-    </button>
-      <transition name="animaInput"
-        enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
-        leave-active-class="animate__animated animate__fadeOutUp animate__faster">
-        <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
-          <select class="form-select" aria-label="Default select" v-model="preciomax" v-if="ver">
-            <!--va con el elemento click del boton y en la lógica tienes que ponerlo a true-->
-            <option disabled value=""></option><!--disabled value="" en blanco para que no pueda ser seleccionado-->
-            <option value="150">Menos de 150€</option>
-            <option value="250">Menos de 250€</option>
-            <option value="350">Menos de 350€</option>
-            <option value="999">Todos los precios</option>
-          </select>
-      </transition>
-    <!--Fin filtros-->
-  <!--Carta cursos-->
-  <transition-group class="row" name="animaCursos" 
-    enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
-    leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
-  <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
-      <div class="col mt-3 d-flex justify-content-center"v-for="curso in cursos"v-if="curso.precio<=preciomax":key="curso.id"> 
-      <!--var curso guardarme cada objetos de cursos-->
-      <!--v-if muestra los cursos según precio en preciomax--> <!--:key="" es de la transición grupal-->
-        <div class="card cartaAncho">
-          <img class="card-img-top" :src="curso.imagen" :alt="curso.name">
-          <!--ojo con :src  sirve para sacar el valor que contiene el objeto-->
-            <div class="card-body position-relative">
-              <h5 class="card-title">{{curso.name}}</h5>
-              <p class="card-text">{{curso.desc}}</p>
-              <span><b>Precio:</b> {{curso.precio | moneda }}</span>
-              <button @click="agregarCesta(curso);añadeProducto=false;verTotalCurso=true"
-                class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">
-                Añadir
-              </button>
-            </div>
-        </div>
+  <div v-if="VerCurso">
+    <div class="enlace container encuadreEnlaces">
+      <div class="tituloCurso container">
+        Cursos
       </div>
-  </transition-group>  
+      <!--filtros-->
+      <button type="button" class="btn btn-primary d-flex justify-content-center botonFiltro" @click="ver=!ver">
+        Filtro precios
+      </button>
+        <transition name="animaInput"
+          enter-active-class="animate__animated animate__fadeInDownBig animate__faster"
+          leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+          <!--  v-model="preciomax">con v-model modificas el valor de preciomax que va en relacion con v-if -->
+            <select class="form-select" aria-label="Default select" v-model="preciomax" v-if="ver">
+              <!--va con el elemento click del boton y en la lógica tienes que ponerlo a true-->
+              <option disabled value=""></option><!--disabled value="" en blanco para que no pueda ser seleccionado-->
+              <option value="150">Menos de 150€</option>
+              <option value="250">Menos de 250€</option>
+              <option value="350">Menos de 350€</option>
+              <option value="999">Todos los precios</option>
+            </select>
+        </transition>
+      <!--Fin filtros-->
+    <!--Carta cursos-->
+      <transition-group class="row" name="animaCursos" 
+        enter-active-class="animate__animated animate__fadeInDownBig animate__faster "
+        leave-active-class="animate__animated animate__fadeOutUp animate__faster" >
+    <!-- <div class="row">  he tenido que quitar este div row y ponerle la clase a la transicion por problemas -->                      
+        <div class="col mt-3 d-flex justify-content-center"v-for="curso in cursos"v-if="curso.precio<=preciomax":key="curso.id"> 
+        <!--var curso guardarme cada objetos de cursos-->
+        <!--v-if muestra los cursos según precio en preciomax--> <!--:key="" es de la transición grupal-->
+          <div class="card cartaAncho">
+            <img class="card-img-top" :src="curso.imagen" :alt="curso.name">
+            <!--ojo con :src  sirve para sacar el valor que contiene el objeto-->
+              <div class="card-body position-relative">
+                <h5 class="card-title">{{curso.name}}</h5>
+                <p class="card-text">{{curso.desc}}</p>
+                <span><b>Precio:</b> {{curso.precio | moneda }}</span>
+                <button @click="agregarCesta(curso);añadeProducto=false;verTotalCurso=true"
+                  class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x botonAñadir">
+                  Añadir
+                </button>
+              </div>
+          </div>
+      </transition-group>  
+    </div>
+  </div>
 </div><!--fin app-->
-
-<div id="app">
   <!--Material escolar------------------------------------------------------------------------------------------->
   <div v-if="VerMaterial"class="enlace">
     <div class="container encuadreEnlaces">
-      <div class="tituloCurso container">Material escolar</div>
+      <div class="tituloCurso container">
+        Material escolar
+      </div>
         <div class="row">
           <div class="col d-flex justify-content-center mt-5" v-for="material in materialEscolar">
-            <div class="card cartaMaterial mt-3">
+            <div class="card cartaMaterial">
               <div class="row rowSinpadding">
                 <div class="col rowSinpadding">
                   <img class="fotoMaterial":src="material.imagen" :alt="material.name">
