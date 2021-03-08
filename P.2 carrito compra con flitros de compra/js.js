@@ -117,6 +117,7 @@ el: '#app',
         let cant = 0;
         for (key in this.cestaMaterial){
           cant = cant + this.cestaMaterial[key].cant;
+          
         }
         return cant;
       },
@@ -135,8 +136,8 @@ el: '#app',
         agregarCesta:function(curso){
             /*al crear una array dentro del array(filter) debe ser cambiado en la vista*/
             var prodExistente;
-            var exitente;
-            exitente = this.cesta.filter(function (item,index) { 
+            var existente;
+            existente = this.cesta.filter(function (item,index) { 
               if(item.curso.id == Number(curso.id)){
                 prodExistente = index;
                 return true;
@@ -144,7 +145,7 @@ el: '#app',
                 return  false;
               }
             });    
-            if(exitente.length){
+            if(existente.length){
                this.cesta[prodExistente]
             }else{
                this.cesta.push({curso:curso})
@@ -154,23 +155,30 @@ el: '#app',
         restarCestaCurso:function (curso) {
           this.cesta.splice(curso,1) 
         },
-        agregarCestaMaterial:function(material){//curso o material
+        agregarCestaMaterial:function(material){//material
           /*al crear una array dentro del array debe ser cambiado en la vista*/
           var prodExistente;
-          var exitente;
-          exitente = this.cestaMaterial.filter(function (item,index) { 
+          var existente;
+          existente = this.cestaMaterial.filter(function (item,index) { 
             if(item.material.id == Number(material.id)){
               prodExistente = index;
               return true;
             }else {
               return  false;
             }
-          });    
-          if(exitente.length){
-            this.cestaMaterial[prodExistente].cant++;
-          }else{
+          });   
+          if(existente.length){
+            this.cestaMaterial[prodExistente].cant;
+             }
+           else{
+             this.cestaMaterial.push({material:material, cant:1})
+           }
+           /* if(existente.length){
+           this.cestaMaterial[prodExistente].cant++;
+            }
+          else{
             this.cestaMaterial.push({material:material, cant:1})
-          }
+          } */
           /*filtro pra no repetir cursos*/
       },
       restarCestaMaterial:function (material) {
@@ -182,6 +190,9 @@ el: '#app',
       },
       botonUnd:function(material){
         this.cestaMaterial[material].cant++;
+        if(this.cestaMaterial[material].cant>=100){//máximo 99 de cantidad
+          this.cestaMaterial[material].cant--;
+        }
       },
         random:function(material){
             /*de forma random me pone si esta o no es stock y su color (cambia el stock según clicas el boton aunque no agregues elementos en la cesta)*/

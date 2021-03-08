@@ -133,7 +133,8 @@ hr {
     font-weight: bold;
     color:red;
     margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin-right: 2rem;
+    width: 21%;
 }
 .fotoMaterial{
     padding: 22px;
@@ -187,10 +188,6 @@ hr {
 }
 .botonCantidad{
     top: -7px;
-}
-.grupoBotonCantidad{
-    position: fixed !important;
-    left: 187px;
 }
 .separadorMateTotal{
     position: relative;
