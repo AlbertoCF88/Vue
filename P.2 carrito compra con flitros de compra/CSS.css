@@ -150,7 +150,6 @@ hr {
 .cartaMaterial:hover{
     animation: hoverMaterial 1s cubic-bezier(0.18, 0.89, 0.32, 1.28)  forwards;
 }    
-
 @keyframes hoverMaterial {
     0%{            
        
@@ -164,7 +163,6 @@ hr {
     height: 149px;
     width: 138px;
 }
-
 .rowSinpadding{
     padding-right:0 !important;
     padding-left: 0 !important;
@@ -225,7 +223,6 @@ hr {
     border-radius: 10px;
     -webkit-box-shadow: rgba(0,0,0,.12) 0 3px 13px 1px;
   }
-
   .enlace{
     opacity: 0;
     animation: enlaceAnima 1s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;

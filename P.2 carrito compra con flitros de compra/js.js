@@ -11,7 +11,6 @@ el: '#example-3',
   VerMaterial:false,//enlaces
   drop:false,// carrito
 
-  total:"",
 cursos: [
     {
       "id":1,
@@ -93,7 +92,7 @@ var app = new Vue({
 el: '#app',
     filters:{
         moneda:function (valor) {  
-          return Number.parseFloat(valor).toFixed(2) + "€";
+          return Number.parseFloat(valor).toFixed(2) + "€";//dos decimales
          },
         dosDigitos(value, pattern = ""){ // dos digitos
           return value.toString().padStart(2,pattern)
@@ -134,7 +133,7 @@ el: '#app',
             return  this.VerCurso, this.VerMaterial
         },
         agregarCesta:function(curso){
-            /*al crear una array dentro del array debe ser cambiado en la vista*/
+            /*al crear una array dentro del array(filter) debe ser cambiado en la vista*/
             var prodExistente;
             var exitente;
             exitente = this.cesta.filter(function (item,index) { 
@@ -194,7 +193,7 @@ el: '#app',
               dado ="En stock";
               material.stock=dado;
               material.color= colorStock;
-             /*    materialmaterial.stock=dado;
+             /* materialmaterial.stock=dado;
                 material.color= colorStock; */
               console.log(`color ${colorStock}`)
               return dado,colorStock
