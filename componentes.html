@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>componentes</title>
+</head>
+    <style>
+        .card {
+          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+          transition: 0.3s;
+          border-radius: 5px; 
+          width: 350px;
+          margin: 15px; 
+          padding-bottom: 15px
+        }
+        .btn{
+          margin: 5px;
+        }
+        img {
+          border-radius: 5px 5px 0 0;
+          height: 200px;
+          width: 350px;
+        }
+        .form-control{
+          max-width: 385px;
+        }
+
+        .fade-enter, .fade-leave-to{
+          opacity: 0;
+        }
+        .fade-enter-active, .fade-leave-active{
+          transition: opacity 1s ease-in-out;
+        }
+    </style>
+<body>
+    <div id="app" class="container">
+        <div class="btn-group">
+       
+         <div class="dropdown">
+         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Cesta: 
+           <span class="badge badge-pill badge-secondary">{{cantTotal}}</span>
+         </button>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+           <div v-for="(cursoCesta, index) in cesta" :key="index">
+           <li class="dropdown-item" href="#">
+             <span class="badge badge-pill badge-success">{{cursoCesta.cant}}</span>
+             {{cursoCesta.curso.name}} {{cursoCesta.cant * cursoCesta.curso.precio | moneda}} <a href="#" @click.stop="quitarCesta(index)" class="badge badge-pill badge-danger">-</a> </li>      
+             </div>
+           <a class="dropdown-item" href="#"><b>Total:</b> {{cestaTotal | moneda}}</a>
+         </div>
+       </div>
+      </div>
+     
+    
+         <cards
+           is="cards"
+           v-for="(curso, index) in cursos"
+           :curso="curso"
+           :key="curso.id"
+           :name="curso.name"
+           :imagen="curso.imagen"
+           :elprecio="curso.precio"
+           :desc="curso.desc" @add="agregarCesta">
+         </cards>
+       
+    </div><!--fin app-->
+    
+
+ <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script>
+Vue.component('precio', {
+  data: function(){
+    return {
+      
+    }
+  },
+  props: {
+    valor: Number, 
+    prefijo: {
+      type: String,
+      default: 'Precio: '
+    }, 
+    sufijo: {
+      type: String,
+      default: '€'
+    }, 
+    libras: Number,
+    decimales: {
+      type: Number,
+      default: 2
+    }
+  },
+  template: '<span><b>{{prefijo}}</b>{{Number(valor).toFixed(decimales)}}{{sufijo}}</span>'
+});
+
+Vue.component('cards', {
+//   props: {'name', 'id', 'desc','imagen', 'elprecio', 'curso'},
+props:{
+  name:{
+    type: String,
+  },
+  id:{
+    type:Number
+  },
+  desc:{
+    type: String, 
+  },
+  imagen:{
+     
+  },
+  elprecio:{
+    type:Number,
+    default: 0
+  },
+  curso:Object,
+},
+
+  template: `
+  <div class="card">
+  <img :src="imagen" :alt="name">
+  <div class="container">
+    <h4><b>{{name}}</b></h4>
+    <p>{{desc}}</p>
+    <!--cambiar evento agregarCesta-->
+    <button class="btn btn-danger" v-on:click="$emit('add', curso)">Añadir</button>
+    <precio :valor="elprecio"></precio><!--componente precio-->
+  </div>
+</div>
+  `
+});
+
+var data = {
+  cesta: [],
+  cursos: [
+    {
+      "id": 1,
+      "name": "Curso Fullstack",
+      "imagen": "http://pixelpro.es/pagamastarde/wp-content/uploads/2019/06/fullstack.png",
+      "desc": "El curso más potente para aprender todo lo necesario sobre Frontend y Backend de la mano de pixelpro y ahora con la certificación oficial de Microsoft sobre programación en Python",
+      "precio": 420
+    },
+    {
+      "id": 2,
+      "name": "Curso Front End",
+      "imagen": "http://pixelpro.es/pagamastarde/wp-content/uploads/2019/07/frontend.png",
+      "desc": "El curso más potente para aprender todo lo necesario sobre Frontend de la mano de pixelpro y ahora con la certificación oficial de Microsoft sobre programación en Javascript",
+      "precio": 220
+    } 
+  ]
+}
+
+
+var app = new Vue({
+      el: '#app',
+      data: data,
+      filters: {
+        moneda: function(valor){
+          return Number.parseFloat(valor).toFixed() + '€';
+            }
+        },
+      computed: {
+        cestaTotal: function(){
+          let suma = 0;
+          for (key in this.cesta){
+            suma = suma+(this.cesta[key].curso.precio * this.cesta[key].cant);
+          }
+          return suma
+        },
+        cantTotal: function(){
+          let cant = 0;
+          for (key in this.cesta){
+            cant = cant+ this.cesta[key].cant;
+          }
+          return cant
+        }
+      },
+      methods: {
+        agregarCesta: function(curso){
+         var prodExistente;
+         var exitente = this.cesta.filter(function(item, index){
+           if (item.curso.id == Number(curso.id)){
+             prodExistente = index;
+             return true;
+           }else{
+             return false;
+           }
+         });
+          
+          if(exitente.length){
+            this.cesta[prodExistente].cant++
+          }else{
+            this.cesta.push({curso: curso, cant:1})
+          }
+        },
+        quitarCesta: function(curso){
+          if(this.cesta[curso].cant>1){
+            this.cesta[curso].cant--;
+          }else{
+            this.cesta.splice(curso, 1)
+          }
+        }
+      },
+
+    })
+
+</script>
+</body>
+</html>
