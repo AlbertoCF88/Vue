@@ -1,8 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import "bootstrap";
-import "bootstrap/dist/css/bootstrap.css"
-import "animate.css/source/animate.css"
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+
 
 
 createApp(App).mount("#app");
